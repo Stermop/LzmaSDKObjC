@@ -53,6 +53,16 @@ static void _LzmaSDKObjCWriterSetFloatCallback(void * context, float value) {
 	}
 }
 
+static bool _LzmaSDKObjCWriterGetBoolCallback(void * context, float value) {
+    LzmaSDKObjCWriter * w = (__bridge LzmaSDKObjCWriter *)context;
+    id<LzmaSDKObjCWriterDelegate> d = w ? w.delegate : nil;
+    if (d && [d respondsToSelector:@selector(onLzmaSDKObjCWriter:writeProgress:)]) {
+        return [d canLzmaSDKObjCWriter:w writeProgress:value] ? true : false;
+    } else {
+        return true;
+    }
+}
+
 - (NSError *) lastError {
 	LzmaSDKObjC::Error * error = _encoder ? _encoder->lastError() : NULL;
 	if (error) {
@@ -112,6 +122,7 @@ static void _LzmaSDKObjCWriterSetFloatCallback(void * context, float value) {
 	_encoder->context = (__bridge void *)self;
 	_encoder->getVoidCallback1 = _LzmaSDKObjCWriterGetVoidCallback1;
 	_encoder->setFloatCallback2 = _LzmaSDKObjCWriterSetFloatCallback;
+    _encoder->getBoolCallback3 = _LzmaSDKObjCWriterGetBoolCallback;
 	if (_encoder->openFile([path UTF8String])) return YES;
 
 	if (error) *error = self.lastError;

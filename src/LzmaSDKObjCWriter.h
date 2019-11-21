@@ -40,6 +40,9 @@
 - (void) onLzmaSDKObjCWriter:(nonnull LzmaSDKObjCWriter *) writer
 			   writeProgress:(float) progress;
 
+- (BOOL)canLzmaSDKObjCWriter:(nonnull LzmaSDKObjCWriter *) writer
+               writeProgress:(float) progress;
+
 @end
 
 @interface LzmaSDKObjCWriter : NSObject

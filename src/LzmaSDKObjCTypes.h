@@ -50,6 +50,7 @@ typedef enum _LzmaSDKObjCMethod {
 
 typedef void * (*LzmaSDKObjCGetVoidCallback)(void * context);
 typedef void (*LzmaSDKObjCSetFloatCallback)(void * context, float value);
+typedef bool (*LzmaSDKObjCGetBoolCallback)(void * context, float value);
 
 #if (defined(DEBUG) || defined(_DEBUG)) && !defined(LZMASDKOBJC_NO_DEBUG_LOG)
 #define LZMASDK_DEBUG_LOG(M, ...) fprintf(stdout, "LZMA DEBUG %d: " M "\n", __LINE__, ##__VA_ARGS__);

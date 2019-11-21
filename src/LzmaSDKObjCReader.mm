@@ -54,6 +54,16 @@ static void _LzmaSDKObjCReaderSetFloatCallback(void * context, float value) {
 	}
 }
 
+static bool _LzmaSDKObjCReaderGetBoolCallback(void * context, float value) {
+    LzmaSDKObjCReader * r = (__bridge LzmaSDKObjCReader *)context;
+    id<LzmaSDKObjCReaderDelegate> d = r ? r.delegate : nil;
+    if (d && [d respondsToSelector:@selector(canLzmaSDKObjCReader:extractProgress:)]) {
+        return [d canLzmaSDKObjCReader:r extractProgress:value] ? true : false;
+    } else {
+        return true;
+    }
+}
+
 static void * _LzmaSDKObjCReaderGetVoidCallback1(void * context) {
 	LzmaSDKObjCReader * r = (__bridge LzmaSDKObjCReader *)context;
 	if (r) return r->_passwordGetter ? NSStringToWideCharactersString(r->_passwordGetter()) : NULL;
@@ -154,6 +164,7 @@ static void * _LzmaSDKObjCReaderGetVoidCallback1(void * context) {
 			for (LzmaSDKObjCItem * item in items) itemsIndices[index++] = item->_index;
 			_decoder->context = (__bridge void *)self;
 			_decoder->setFloatCallback2 = _LzmaSDKObjCReaderSetFloatCallback;
+            _decoder->getBoolCallback3 = _LzmaSDKObjCReaderGetBoolCallback;
             if (_decoder->isSolidArchive()) {
                 qsort(itemsIndices, count, sizeof(uint32_t), LzmaSDKObjC::Common::compareIndices);
             }

@@ -63,6 +63,9 @@ LZMASDKOBJC_EXTERN NSString * const _Nonnull kLzmaSDKObjCErrorDescrEncDecNotCrea
 - (void) onLzmaSDKObjCReader:(nonnull LzmaSDKObjCReader *) reader
 			 extractProgress:(float) progress;
 
+- (BOOL)canLzmaSDKObjCReader:(nonnull LzmaSDKObjCReader *) reader
+             extractProgress:(float) progress;
+
 @end
 
 

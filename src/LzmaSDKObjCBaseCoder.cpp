@@ -60,6 +60,14 @@ namespace LzmaSDKObjC {
 		if (context && setFloatCallback2) setFloatCallback2(context, progress);
 	}
 
+    bool BaseCoder::onBeforeContinue(const float progress) {
+        if (context && setFloatCallback2) {
+            return getBoolCallback3(context, progress);
+        } else {
+            return true;
+        }
+    }
+
 	bool BaseCoder::requiredCallback1() const {
 		return false;
 	}

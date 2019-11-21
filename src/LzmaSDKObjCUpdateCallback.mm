@@ -70,6 +70,10 @@ namespace LzmaSDKObjC {
 			const long double complete = *completeValue;
 			const float progress = (_total > 0) ? (float)(complete / _total) : 0;
 			coder->onProgress(progress);
+            bool canContinue = coder->onBeforeContinue(progress);
+            if (!canContinue) {
+                return E_NOTIMPL;
+            }
 		}
 		return S_OK;
 	}

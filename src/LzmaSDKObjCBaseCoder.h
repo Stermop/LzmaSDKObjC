@@ -40,10 +40,12 @@ namespace LzmaSDKObjC {
 	public:
 		void * context;
 		LzmaSDKObjCGetVoidCallback getVoidCallback1;
-		LzmaSDKObjCSetFloatCallback setFloatCallback2;
+        LzmaSDKObjCSetFloatCallback setFloatCallback2;
+        LzmaSDKObjCGetBoolCallback getBoolCallback3;
 
 		// callbacks section
-		void onProgress(const float progress); // encode/decode
+        void onProgress(const float progress); // encode/decode
+        bool onBeforeContinue(const float progress); // encode/decode
 		virtual bool requiredCallback1() const; // pwd, default is `false`.
 		UString onGetVoidCallback1(); // pwd
 
